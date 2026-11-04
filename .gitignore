@@ -1,0 +1,6 @@
+# Build output (regenerate with ./install_home.sh)
+*.wgt
+.buildResult/
+author-signature.xml
+signature*.xml
+.DS_Store

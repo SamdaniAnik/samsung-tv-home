@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>My Home</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="icon.png">
+</head>
+<body>
+
+  <div id="app">
+    <header class="home-header">
+      <div class="time-block">
+        <div class="greeting" id="greeting">Welcome</div>
+        <div class="clock" id="clock">--:--</div>
+        <div class="date" id="date"></div>
+      </div>
+
+      <div class="weather" id="weather">
+        <div class="weather-icon" id="weather-icon">⛅</div>
+        <div class="weather-text">
+          <div class="weather-temp" id="weather-temp">--°</div>
+          <div class="weather-desc" id="weather-desc">Loading weather…</div>
+          <div class="weather-range" id="weather-range"></div>
+        </div>
+      </div>
+    </header>
+
+    <main class="rows-viewport" id="rows-viewport">
+      <div class="rows" id="rows"></div>
+    </main>
+
+    <footer class="home-footer">
+      <div class="hint"><span class="key">▲ ▼ ◀ ▶</span> Move</div>
+      <div class="hint"><span class="key">OK</span> Open</div>
+      <div class="hint"><span class="key key-red">RED</span> Pin / Favorite</div>
+      <div class="hint"><span class="key key-green">GREEN</span> Last channel</div>
+      <div class="hint"><span class="key key-yellow">YELLOW</span> Category</div>
+      <div class="hint"><span class="key">CH ▲▼</span> Skip 5</div>
+      <div class="hint"><span class="key">0 – 9</span> Channel no.</div>
+      <div class="hint"><span class="key">RETURN</span> Back</div>
+    </footer>
+  </div>
+
+  <div class="source-hint" id="source-hint">
+    <span class="key">RETURN</span> Back to Home
+  </div>
+
+  <div class="dial" id="dial">
+    <span class="dial-label">CH</span>
+    <span class="dial-digits" id="dial-digits"></span>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="$WEBAPIS/webapis/webapis.js"></script>
+  <script src="js/settings.js"></script>
+  <script src="channels.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

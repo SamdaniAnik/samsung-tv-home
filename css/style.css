@@ -1,0 +1,436 @@
+:root {
+  --bg: #07090e;
+  --surface: #121a2a;
+  --surface-hi: #1a2440;
+  --accent: #00e5ff;
+  --accent-2: #7c3aed;
+  --red: #f43f5e;
+  --text: #f8fafc;
+  --muted: #94a3b8;
+  --border: rgba(255, 255, 255, 0.08);
+  --focus: 0 0 0 4px #00e5ff, 0 14px 40px rgba(0, 229, 255, 0.45);
+  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+html, body {
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 48px 80px 28px;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(124, 58, 237, 0.28) 0%, transparent 45%),
+    radial-gradient(circle at 88% 10%, rgba(0, 229, 255, 0.18) 0%, transparent 45%),
+    var(--bg);
+}
+
+/* Header: clock + weather */
+.home-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.greeting {
+  font-size: 30px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.clock {
+  font-size: 128px;
+  font-weight: 200;
+  line-height: 1;
+  letter-spacing: -2px;
+  margin: 6px 0 8px;
+}
+
+.clock .ampm {
+  font-size: 40px;
+  font-weight: 400;
+  margin-left: 12px;
+  color: var(--muted);
+  letter-spacing: 0;
+}
+
+.date {
+  font-size: 32px;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.weather {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 24px 36px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+}
+
+.weather-icon {
+  font-size: 96px;
+  line-height: 1;
+}
+
+.weather-temp {
+  font-size: 72px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.weather-desc {
+  font-size: 28px;
+  margin-top: 6px;
+}
+
+.weather-range {
+  font-size: 22px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* Rows */
+.rows-viewport {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  margin: 8px -24px 0;
+  padding: 0 24px;
+}
+
+.rows {
+  position: relative;
+  transition: transform 0.25s ease;
+}
+
+.row {
+  padding-top: 28px;
+}
+
+.row-title {
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.row-count {
+  font-size: 22px;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.row-strip {
+  padding: 4px 0 18px;
+}
+
+.row-tiles {
+  position: relative;
+  display: flex;
+  gap: 26px;
+  transition: transform 0.2s ease;
+}
+
+.row-empty {
+  font-size: 24px;
+  color: var(--muted);
+  padding: 24px 0;
+}
+
+/* Tiles */
+.tile {
+  flex-shrink: 0;
+  border-radius: 22px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  cursor: pointer;
+}
+
+.tile.focused {
+  transform: scale(1.08);
+  box-shadow: var(--focus);
+  background: var(--surface-hi);
+  z-index: 2;
+}
+
+.tile-name {
+  font-size: 22px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tile-pin {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font-size: 20px;
+  color: #fbbf24;
+}
+
+/* App tiles */
+.tile-app {
+  width: 260px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  padding: 0 18px;
+}
+
+.tile-app .app-icon {
+  width: 96px;
+  height: 96px;
+  border-radius: 22px;
+  object-fit: contain;
+}
+
+.tile-app .app-monogram {
+  width: 96px;
+  height: 96px;
+  border-radius: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 46px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.tile-app .tile-name {
+  max-width: 100%;
+}
+
+/* Channel tiles */
+.tile-channel {
+  width: 230px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.channel-logo-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.92);
+  margin: 12px 12px 0;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.channel-logo {
+  max-width: 85%;
+  max-height: 85%;
+  object-fit: contain;
+}
+
+.channel-logo-fallback {
+  font-size: 48px;
+  display: none;
+}
+
+.channel-meta {
+  padding: 10px 14px 12px;
+}
+
+.channel-meta .tile-name {
+  font-size: 20px;
+}
+
+.channel-number {
+  font-size: 16px;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* Source tiles */
+.tile-source {
+  width: 230px;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 26px;
+  gap: 10px;
+}
+
+.source-icon {
+  font-size: 44px;
+  line-height: 1;
+}
+
+.source-state {
+  font-size: 18px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.source-state .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #475569;
+}
+
+.source-state.connected {
+  color: #34d399;
+}
+
+.source-state.connected .dot {
+  background: #10b981;
+  box-shadow: 0 0 10px #10b981;
+}
+
+/* Footer */
+.home-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  font-size: 20px;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.hint {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.key {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text);
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.key-red {
+  background: var(--red);
+}
+
+.key-green {
+  background: #16a34a;
+}
+
+.key-yellow {
+  background: #ca8a04;
+}
+
+/* HDMI / TV source shown through the TV window behind the page */
+body.source-mode,
+body.source-mode #app {
+  background: transparent;
+}
+
+body.source-mode #app {
+  visibility: hidden;
+}
+
+.source-hint {
+  position: fixed;
+  top: 40px;
+  right: 60px;
+  padding: 14px 24px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.7);
+  font-size: 24px;
+  display: none;
+  transition: opacity 0.6s ease;
+}
+
+body.source-mode .source-hint {
+  display: block;
+}
+
+.source-hint.faded {
+  opacity: 0;
+}
+
+/* Channel number dial */
+.dial {
+  position: fixed;
+  top: 60px;
+  right: 80px;
+  padding: 18px 34px;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px solid var(--accent);
+  display: none;
+  align-items: baseline;
+  gap: 14px;
+}
+
+.dial.show {
+  display: flex;
+}
+
+.dial-label {
+  font-size: 30px;
+  color: var(--muted);
+}
+
+.dial-digits {
+  font-size: 72px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 90px;
+  transform: translate(-50%, 40px);
+  padding: 18px 34px;
+  border-radius: 16px;
+  background: rgba(15, 20, 32, 0.95);
+  border: 1px solid var(--border);
+  font-size: 24px;
+  opacity: 0;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
